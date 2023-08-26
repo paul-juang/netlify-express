@@ -1,8 +1,14 @@
-//express on netlify
 const express = require('express');
-const app = express();
+
+const api = express();
+
+const router = express.Router();
+
+const serverless = require('serverless-http');
 
 const cors = require('cors');
+
+require('dotenv').config();
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -12,44 +18,37 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
-require('dotenv').config();
+const bodyParser = require('body-parser');
 
 const path = require('path');
-
-const bodyParser = require('body-parser');
 
 //const PORT = process.env.PORT || 3000;
 
 //app.set
-app.set("view engine", "ejs");
+api.set("view engine", "ejs");
 
-app.set("views", path.join(__dirname, "views"));
+api.set("views", path.join(__dirname, "views"));
 
 //middleware
-app.use(express.static(__dirname));
+api.use(cors());
 
-app.use(express.static(path.join(__dirname, "public")));
+api.use(express.static(__dirname));
 
-app.use(express.urlencoded({extended: false}));
+api.use(express.static(path.join(__dirname, "js"))); //public
 
-app.use(express.json());
+api.use(express.urlencoded({extended: false}));
 
-app.use(cors());
-
-const router = express.Router();
-
-app.use('/.netlify/functions/server', router);  // path must route to lambda
-//app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
+api.use(express.json());
 
 //home page
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, '../index.html'))
+router.get("/", (req, res) => {
+  res.render("chatgpt");
 });
 
-app.post("/chatGPT", async (req, res) => {
+router.post("/chatGPT", async (req, res) => {
 
   let prompt = req.body.prompt;
-
+  
   const { Configuration, OpenAIApi } = require("openai");
 
   const configuration = new Configuration({
@@ -65,21 +64,20 @@ app.post("/chatGPT", async (req, res) => {
             messages: [{role:"user", content:prompt}]
          })
         let answer = response["data"]["choices"][0]["message"]["content"]
-        res.send(answer)
+        res.json({answer})
        } 
     catch(error) {
         console.log({error})
-        res.send({error})
+        res.json({error})
        }
     }
 
    chatGPT(prompt)
 
   })
-  
-//app.listen(PORT, () => {
-//    console.log('Server listening on ' + PORT);
-//});
 
+api.use('/.netlify/functions/', router);
+
+export const handler = serverless(api);
 //module.exports = app;
-module.exports.handler = serverless(app);
+//module.exports.handler = serverless(app);
