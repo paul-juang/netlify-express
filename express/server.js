@@ -23,27 +23,28 @@ const path = require('path');
 const PORT = process.env.PORT || 3000;
 
 //app.set
-app.set("view engine", "ejs");
+//app.set("view engine", "ejs");
 
-app.set("views", path.join(__dirname, "views"));
+//app.set("views", path.join(__dirname, "views"));
+
 
 //middleware
 app.use(cors());
 
 app.use(express.static(__dirname));
 
-app.use(express.static(path.join(__dirname, "js"))); //public
+app.use(express.static(path.join(__dirname, "../src"))); //public
 
 app.use(express.urlencoded({extended: false}));
 
 app.use(express.json());
 
-app.use('/.netlify/functions/server', router);  // path must route to lambda
+//app.use('/.netlify/functions/server', router);  // path must route to lambda
 //app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
 
 //home page
 app.get("/", (req, res) => {
-  res.render("chatgpt");
+  res.sendFile("../src/index.html");
 });
 
 app.post("/chatGPT", async (req, res) => {
