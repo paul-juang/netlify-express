@@ -44,7 +44,7 @@ app.use(express.json());
 
 //home page
 app.get("/", (req, res) => {
-  res.sendFile("../src/index.html");
+  res.sendFile("index.html");
 });
 
 app.post("/chatGPT", async (req, res) => {

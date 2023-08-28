@@ -42,7 +42,7 @@ api.use(express.json());
 
 //home page
 router.get("/", (req, res) => {
-  res.sendFile("../src/index.html");
+  res.sendFile("index.html");
 });
 
 router.post("/chatGPT", async (req, res) => {

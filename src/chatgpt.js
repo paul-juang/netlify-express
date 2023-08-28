@@ -10,10 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   button.addEventListener("click", async function(e) {
     e.preventDefault()
-    console.log("button click")
     
     const promptValue = prompt.value.trim()+"\r\n";
     prompt.value = "";
+    prompt.placeholder = "";
 
     let interval1 = setInterval(() => {
       prompt.value += ".";
