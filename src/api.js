@@ -45,12 +45,10 @@ router.get("/", (req, res) => {
   res.sendFile("index.html");
 });
 
+ router.get("/chatGPT", async (req, res) => {
 
-router.("/chatgpt",  (req, res) => {
-
-  //let prompt = "A list of the most famous generals in the Civil War.";
   let prompt = req.body.prompt;
-
+  
   const { Configuration, OpenAIApi } = require("openai");
 
   const configuration = new Configuration({
@@ -66,10 +64,10 @@ router.("/chatgpt",  (req, res) => {
             messages: [{role:"user", content:prompt}]
          })
         let answer = response["data"]["choices"][0]["message"]["content"]
-        
-        res.text(answer)
+        res.json({answer})
        } 
     catch(error) {
+        console.log({error})
         res.json({error})
        }
     }
@@ -77,8 +75,43 @@ router.("/chatgpt",  (req, res) => {
    chatGPT(prompt)
 
   })
-api.use('/api/', router);
+
+/* function handler(event, context, callback) {
+  if(event.httpMethod === 'POST' && event.path === '/chatGPT') {
+    const requestBody = JSON.parse(event.body);
+    callback(null, {
+      statusCode: 200,
+      body: requestBody
+    });
+  } else {
+    callback(null, {
+      statusCode: 400,
+      body: {}
+    });
+  }
+}
+*/
+
+api.use('/.netlify/functions/', router);
 export const handler = serverless(api);
 
-//api.use('/.netlify/functions/api', router);
-//module.exports.handler = serverless(api);
+api.use('/.netlify/functions/api', router);
+module.exports.handler = serverless(api);
+
+/*
+exports.handler = function(event, context, callback) {
+  if(event.httpMethod === 'POST' && event.path === '/my/path') {
+    const requestBody = JSON.parse(event.body);
+    const newValue = updateDatabase(requestBody);
+    callback(null, {
+      statusCode: 200,
+      body: newValue
+    });
+  } else {
+    callback(null, {
+      statusCode: 400,
+      body: {}
+    });
+  }
+}
+*/

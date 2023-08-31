@@ -1,12 +1,7 @@
 //chatGPT-OpenAi
+console.log("chatgptx")
 document.addEventListener('DOMContentLoaded', () => {
   const prompt = document.querySelector("#prompt");
-  const thisvalue = "How many languages do you understand, and are you also " + 
-  "knowledgeable about the subjects of Art, Literature, and History, "+
-  "and also well trained in the areas of Science, such as Newtonian " + 
-  "Physics, the theory of General Relativity, and Quantum Mechanics? " +
-  "Please answer the above question in English and traditional Chinese."
-  prompt.addEventListener("dblclick", (e) => e.target.value = thisvalue)
 
   prompt.addEventListener("keyup", () => button.disabled = false)
 
@@ -24,18 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
       if (prompt.value === "....") prompt.value = ""
     }, 300)
     
-
     let res = await fetch(`/chatgpt?prompt=${promptValue}`, {
-
-            method: 'GET', 
+                  method: 'GET', 
                   headers: {
-                     'Content-Type': 'text/plain',
-                     'Access-Control-Allow-Origin': '*',
-                     'Access-Control-Allow-Headers': 'Authorization,Content-Type ',
-                    },
+                     'Content-Type': 'application/json'
+                    }
                   })
-        let answer = await res.text();
-        let answerText = answer;
+
+        let answer = await res.json();
+        let answerText = answer["answer"];
+
         clearInterval(interval1);
 
         prompt.value = "";

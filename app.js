@@ -80,5 +80,4 @@ app.get("/chatgpt",  (req, res) => {
 
   })
 
-module.exports = app;
-//module.exports.handler = serverless(app);
+app.listen(3000, () => console.log('listening on port 3000 ...'));

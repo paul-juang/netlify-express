@@ -1,14 +1,12 @@
 const express = require('express');
 
-const api = express();
+const app = express();
 
 const router = express.Router();
 
 const serverless = require('serverless-http');
 
 const cors = require('cors');
-
-require('dotenv').config();
 
 const { Configuration, OpenAIApi } = require("openai");
 
@@ -18,36 +16,42 @@ const configuration = new Configuration({
 
 const openai = new OpenAIApi(configuration);
 
+require('dotenv').config();
+
 const bodyParser = require('body-parser');
 
 const path = require('path');
 
-//const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 //app.set
-//api.set("view engine", "ejs");
+//app.set("view engine", "ejs");
 
-//api.set("views", path.join(__dirname, "views"));
+//app.set("views", path.join(__dirname, "views"));
+
 
 //middleware
-api.use(cors());
+app.use(cors());
 
-api.use(express.static(__dirname));
+app.use(express.static(__dirname));
 
-api.use(express.static(path.join(__dirname, "../src"))); //public
+app.use(express.static(path.join(__dirname, "../src"))); //public
 
-api.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: false}));
 
-api.use(express.json());
+app.use(express.json());
+
+//app.use('/.netlify/functions/server', router);  // path must route to lambda
+//app.use('/', (req, res) => res.sendFile(path.join(__dirname, '../index.html')));
 
 //home page
-router.get("/", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile("index.html");
-});
+ });
 
-router.post("/chatGPT", async (req, res) => {
-
-  let prompt = req.body.prompt;
+app.get("/chatgpt",  (req, res) => {
+  
+  let prompt = req.query.prompt;
   
   const { Configuration, OpenAIApi } = require("openai");
 
@@ -64,7 +68,8 @@ router.post("/chatGPT", async (req, res) => {
             messages: [{role:"user", content:prompt}]
          })
         let answer = response["data"]["choices"][0]["message"]["content"]
-        res.json({answer})
+       console.log(answer)
+        res.send(answer)
        } 
     catch(error) {
         console.log({error})
@@ -76,8 +81,5 @@ router.post("/chatGPT", async (req, res) => {
 
   })
 
-api.use('/.netlify/functions/', router);
-
-export const handler = serverless(api);
-//module.exports = app;
+module.exports = app;
 //module.exports.handler = serverless(app);
