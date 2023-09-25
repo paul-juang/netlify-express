@@ -1,8 +1,7 @@
-[functions]
-  external_node_modules = ["express"]
-  node_bundler = "esbuild"
+[build]
+  base = "/"
+  functions = "functions/"
 [[redirects]]
-  force = true
-  from = "/api/*"
+  from = "/chatgpt"
+  to = "/.netlify/functions/chatgpt"
   status = 200
-  to = "/.netlify/functions/api:splat"
