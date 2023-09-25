@@ -19,7 +19,6 @@ export default function Home(props) {
   const handleChange = (e) => setinputValue(e.target.value)
 
   const handleClick = async () => {
-    console.log("click from index.js")
     
     const promptValue = inputValue.trim()
     setinputValue('')
@@ -40,14 +39,9 @@ export default function Home(props) {
                     },
                   body: JSON.stringify({ prompt: promptValue })
                   })
-    console.log("res", res)
 
-    let answer = await res.text();
-    let answerText = answer;
-    
-        //let answer = await res.json();
-        //let answerText = answer["prompt"];
-        //let answerText = "status 204 no response from server"  //answer["prompt"];
+        let answer = await res.json();
+        let answerText = answer["prompt"];
         clearInterval(interval1);
 
         setinputValue('')
