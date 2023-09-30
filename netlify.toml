@@ -1,7 +1,11 @@
-[build]
-  base = "/"
-  functions = "functions/"
+ [functions]
+   [functions.functions]
+    external_node_modules = [
+      "module-one",
+      "module-two"
+    ] 
+  
 [[redirects]]
-  from = "/chatgpt"
-  to = "/.netlify/functions/chatgpt"
+  from = "/openai"
+  to = "/.netlify/functions/openai"
   status = 200

@@ -30,7 +30,7 @@ export default function Home(props) {
       if (tempValue === "...") tempValue = ""
      }, 300)
     
-    let res = await fetch("/chatgpt", {
+    let res = await fetch("/api/openai", {
             method: 'POST', 
                   headers: {
                      'Content-Type': 'application/json',
@@ -40,6 +40,8 @@ export default function Home(props) {
                   body: JSON.stringify({ prompt: promptValue })
                   })
 
+//let answer = await res.text();
+//let answerText = answer;
         let answer = await res.json();
         let answerText = answer["prompt"];
         clearInterval(interval1);
