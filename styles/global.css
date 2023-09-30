@@ -1,4 +1,5 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css');
+
 html {
   margin: 0;
   padding: 0;
@@ -10,30 +11,6 @@ body {
   line-height: 1.6;
 }
 
-.header-nav ul {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  list-style: none;
-}
-
-.header-nav a {
-  color: #a7a7a7;
-  margin-right: 10px;
-  font-size: 0.9rem;
-}
-
-.header-nav a.active {
-  color: #222;
-}
-
-.site-footer {
-  margin-top: 1rem;
-  border-top: 1px dotted #adadad;
-  text-align: center;
-  color: #999;
-  font-size: 0.75rem;
-}
 
 h3 {
   position: relative;
@@ -44,7 +21,7 @@ h3 {
 #prompt {
   position: relative;
   top: 20px;
-  width: 94%;
+  width: 100%;
   padding: 12px 20px;
   box-sizing: border-box;
   border: 2px solid #ccc;
@@ -57,7 +34,7 @@ h3 {
 
 #btn {
   position: relative;
-  top: 2px;
+  top: 12px;
   width: 60px;
   padding: 12px 20px;
   box-sizing: border-box;
