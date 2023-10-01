@@ -13,14 +13,13 @@ body {
 
 
 h3 {
-  position: relative;
-  top: 18px;
+  position: relative; 
   text-align: center;
 }
 
 #prompt {
   position: relative;
-  top: 20px;
+  top: 8px;
   width: 100%;
   padding: 12px 20px;
   box-sizing: border-box;
@@ -34,7 +33,7 @@ h3 {
 
 #btn {
   position: relative;
-  top: 12px;
+  top: 0px;
   width: 60px;
   padding: 12px 20px;
   box-sizing: border-box;
