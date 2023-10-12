@@ -33,7 +33,9 @@ export default function Home(props) {
   const handleChange = (e) => setinputValue(e.target.value)
 
   const handleClick = async () => {
+    
     const promptValue = inputValue.trim()
+   
     setinputValue('')
 
     let tempValue = ''
@@ -42,8 +44,10 @@ export default function Home(props) {
       setinputValue(tempValue)
       if (tempValue === "...") tempValue = ""
      }, 300)
+
     
     let res = await fetch("/api/chatgpt", {
+
             method: 'POST', 
                   headers: {
                      'Content-Type': 'application/json',
@@ -51,8 +55,9 @@ export default function Home(props) {
                      'Access-Control-Allow-Headers': 'Authorization,Content-Type ',
                     },
                   body: JSON.stringify({ prompt: promptValue })
-                  })
-    
+                 
+        })
+
         let answer = await res.json();
         let answerText = answer["prompt"];
         clearInterval(interval1);
@@ -82,7 +87,7 @@ export default function Home(props) {
           value={inputValue} 
           onChange= {handleChange}
           placeholder= {thisvalue3}
-          id="prompt" rows="12" cols="40" resizeable="true">
+          id="prompt" rows="13" cols="1" resizeable="true">
         </textarea>
         <button 
             onClick = {handleClick}  id="btn" 

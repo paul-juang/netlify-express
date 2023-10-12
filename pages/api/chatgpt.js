@@ -9,7 +9,7 @@ const openai = new OpenAIApi(configuration);
 export default function handler(req,res) {
 
   let prompt = req.body.prompt;
-  
+
   const chatGPT = async (prompt) => {
 
     try {

@@ -4,8 +4,3 @@
       "module-one",
       "module-two"
     ] 
-  
-[[redirects]]
-  from = "/openai"
-  to = "/.netlify/functions/openai"
-  status = 200
